@@ -26,7 +26,7 @@ sudo iptables -A INPUT -p tcp -s 192.168.88.XXXXXXXX --dport 4433 -j ACCEPT
 openssl s_client -connect 192.168.88.XXXXXXXXXXXXXXXX:4433 -verify_return_error -verify_hostname localhost -CAfile ca_cert.pem
 ```
 
-## 2
+## 2 & 7
 
 ```
 # Lancer deuxième machine
