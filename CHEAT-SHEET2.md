@@ -119,6 +119,8 @@ sudo arpspoof -i eth0 -t 192.168.2.1 192.168.2.2
 # Laisser les deux commandes en parralèle et lancer wireshark
 # Lancer aussi la commande suivante et attendre d'avoir les deux lignes (les deux IPs pointent vers la m^me @MAC)
 arp -a
+# Montrer sur le client :
+ip neigh show
 ```
 
 ## 5
