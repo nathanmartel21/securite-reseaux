@@ -2,7 +2,7 @@
 
 ```
 # générer autorité de certif
-openssl s_server -port 4433 -key server_keypair.pem -cert server_cert.pem
+openssl req -newkey ED448 -x509 -subj "/CN=Root CA" -addext "basicConstraints=critical,CA:TRUE" -days 3650 -noenc -keyout ca_keypair.pem -out ca_cert.pem
 # générer clefs + CSR pour le serv TLS
 openssl req -newkey ED448 -subj "/CN=localhost" -addext "basicConstraints=critical,CA:FALSE" -noenc -keyout server_keypair.pem -out server_csr.pem
 # signer le certif du serv avec le CA
