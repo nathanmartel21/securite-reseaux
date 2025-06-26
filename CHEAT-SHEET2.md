@@ -140,15 +140,15 @@ sudo mitmproxy --mode transparent --showhost --listen-port 8080
 # Il y aura une erreur 502 mais on voit dans le mitmproxy
 ```
 
+## 6
 
+```
+apt install arping
+arping -c 1 192.168.2.1
+ip neigh show
+sudo ip neigh del 192.168.2.1 dev enp0s3
+sudo ip neigh add 192.168.2.1 lladdr [@MAC] dev enp0s3 nud permanent
 
-
-
-
-
-
-
-
-
-
+# Relancer une fois l'attaque, l'adresse MAC ne bouge pas
+```
 
