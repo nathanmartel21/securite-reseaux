@@ -90,7 +90,7 @@ openssl dgst -sha256 encrypted_file.enc > encrypted_file.enc.sha256
 python3 -m http.server
 
 # Sur le routeur :
-sudo iptables -t nat -A PREROUTING -i [INT INTERNE] -p tcp --dport 8888 -j DNAT --to-destination 192.168.2.2:8000
+sudo iptables -t nat -A PREROUTING -i [INT EXTERNE] -p tcp --dport 8888 -j DNAT --to-destination 192.168.2.2:8000
 sudo iptables -A FORWARD -p tcp -d 192.168.2.2 --dport 8000 -j ACCEPT
 
 
