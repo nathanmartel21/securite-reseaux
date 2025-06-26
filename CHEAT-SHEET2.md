@@ -124,7 +124,18 @@ arp -a
 ## 5
 
 ```
+# Sur le routeur
+apt install mitmproxy
+mkdir -p ~/.mitmproxy
+cp ../1er/ca_cert.pem mitmproxy-ca-cert.pem
+cp ../1er/ca_keypair.pem mitmproxy-ca-key.pem
+# par défaut mitmproxy va contacter le serveur d'origine sur le port 443, d'où la redirection
+sudo iptables -t nat -A PREROUTING -i [INT INTERNE] -p tcp --dport 443 -j REDIRECT --to-port 8080
+echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
+sudo mitmproxy --mode transparent --showhost --listen-port 8080
 
+# Sur le client : faire https://[IP ROUTEUR]:8080
+# Il y aura une erreur 502 mais on voit dans le mitmproxy
 ```
 
 
