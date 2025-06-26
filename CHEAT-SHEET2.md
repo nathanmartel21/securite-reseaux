@@ -93,8 +93,19 @@ python3 -m http.server
 sudo iptables -t nat -A PREROUTING -i [INT EXTERNE] -p tcp --dport 8888 -j DNAT --to-destination 192.168.2.2:8000
 sudo iptables -A FORWARD -p tcp -d 192.168.2.2 --dport 8000 -j ACCEPT
 
+# Tester sur internet : http://[IP ROUTEUR]:8888
 
+# Depuis PC prof :
+curl http://[IP ROUTEUR]:8888/encrypted_file.enc
+curl http://[IP ROUTEUR]:8888/encrypted_file.enc.sha256
+# Vérifier le hash
+openssl dgst -sha256 encrypted_file.enc #comparer avec le fichier encrypted_file.enc.sha256
+
+#Bonus, déchiffrement :
+openssl enc -aes-256-cbc -K KEY -iv IV -d -in encrypted_file.enc -out decrypted.txt
 ```
+
+## 4
 
 
 
