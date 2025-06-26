@@ -71,7 +71,30 @@ iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
 iptables-save > /etc/iptables/rules.v4
 ```
 
+## 3
 
+```
+# Sur le client
+mkdir web
+cd web
+# Génération fichier
+seq 1000 > plaintext_file.txt
+# Clef AES :
+openssl rand -hex 32
+# IV :
+openssl rand -hex 16
+# Chiffrer le fichier
+openssl enc -aes-256-cbc -K KEY -iv IV -e -in plaintext_file.txt -out encrypted_file.enc
+# Générer la somme :
+openssl dgst -sha256 encrypted_file.enc > encrypted_file.enc.sha256
+python3 -m http.server
+
+# Sur le routeur :
+sudo iptables -t nat -A PREROUTING -i [INT INTERNE] -p tcp --dport 8888 -j DNAT --to-destination 192.168.2.2:8000
+sudo iptables -A FORWARD -p tcp -d 192.168.2.2 --dport 8000 -j ACCEPT
+
+
+```
 
 
 
