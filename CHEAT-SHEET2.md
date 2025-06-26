@@ -21,6 +21,12 @@ sudo iptables -A INPUT -p tcp -s 192.168.88.X --dport 4433 -j ACCEPT
 sudo iptables -A INPUT -p tcp -s 192.168.88.XXXXXXXX --dport 4433 -j ACCEPT
 # iptables -nL -v
 
+#### OU :
+
+iptables -A INPUT -p tcp --dport 4433 -s 172.20.10.4 -j ACCEPT
+iptables -A INPUT -p tcp --dport 4433 -s 172.20.10.5 -j ACCEPT
+iptables -A INPUT -p tcp --dport 4433 -j DROP
+
 # se connecter au serv
 # lancer un serveur python et faire un curl dessus pour récupérer ca_cert.pem
 openssl s_client -connect 192.168.88.XXXXXXXXXXXXXXXX:4433 -verify_return_error -verify_hostname localhost -CAfile ca_cert.pem
