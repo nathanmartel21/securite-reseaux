@@ -22,12 +22,48 @@ sudo iptables -A INPUT -p tcp -s 192.168.88.XXXXXXXX --dport 4433 -j ACCEPT
 # iptables -nL -v
 
 # se connecter au serv
+# lancer un serveur python et faire un curl dessus pour récupérer ca_cert.pem
 openssl s_client -connect 192.168.88.XXXXXXXXXXXXXXXX:4433 -verify_return_error -verify_hostname localhost -CAfile ca_cert.pem
 ```
 
 ## 2
 
+```
+# Lancer deuxième machine
+## Sur PC client :
+vim /etc/network/interfaces
 
+auto enp0s3
+iface enp0s3 inet static
+  address 192.168.2.2
+  netmask 255.255.255.0
+  gateway 192.168.2.1
+  dns-nameservers 8.8.8.8 1.1.1.1
+
+systemctl restart networking
+reboot
+
+## Sur routeur :
+
+vim /etc/network/interfaces
+# laisser dhcp pour la pont
+
+auto enp0s8
+iface enp0s8 inet static
+  address 192.168.2.1
+  netmask 255.255.255.0
+
+systemctl restart networking
+reboot
+
+echo 1 > /proc/sys/net/ipv4/ip_forward
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+sysctl -p
+sudo apt update
+sudo apt install iptables-persistent
+iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+iptables-save > /etc/iptables/rules.v4
+```
 
 
 
